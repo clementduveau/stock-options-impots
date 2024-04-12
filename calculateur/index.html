@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Calculateur impôts stock-options</title>
+    <meta name="description" content="Un calculateur simple des taxes à payer lors de l'achat de stock-options en France.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clementduveau.github.io/stock-options-impots/">
+    <meta property="og:title" content="Calculateur impôts stock-options">
+    <meta property="og:description" content="Un calculateur simple des taxes à payer lors de l'achat de stock-options en France.">
+    <meta property="og:image" content="https://clementduveau.github.io/stock-options-impots/favicon/512x512.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://clementduveau.github.io/stock-options-impots/">
+    <meta name="twitter:title" content="Calculateur impôts stock-options">
+    <meta name="twitter:description" content="Un calculateur simple des taxes à payer lors de l'achat de stock-options en France.">
+    <meta name="twitter:image" content="https://clementduveau.github.io/stock-options-impots/favicon/512x512.png">
+
+    <link rel="icon" type="image/png" href="./favicon/favicon.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+
+    <script src="./script.js" defer></script>
+</head>
+
+<body>
+    <header class="container">
+        <h1>Calculateur impôts stock-options</h1>
+        <h2>Informations</h2>
+        <p>
+        <ul>
+            <li>Le calculateur est conçu pour les stock-options émises après Février 2017 (avant cette date il y a
+                d'autdes
+                règles plus avantageuses).</li>
+            <li>Les résultats sont à 1€ près.</li>
+        </ul>
+        </p>
+        <details>
+            <summary role="button" class="secondary">Mes options sont dans un PEE</summary>
+            <p>Dans un PEE, la fiscalité est différente. Seul les prélèvements sociaux sont dûs. Ne tenez pas compte de
+                l'impôt sur le revenu dans les résultats.</p>
+        </details>
+    </header>
+    <hr>
+    <main class="container">
+        <h2>Calculateur</h2>
+        <form class="grid">
+            <div>
+                <label for="marketValue">Prix de marché:</label>
+                <input type="number" id="marketValue" aria-describedby="marketValueExplained" required>
+                <small id="marketValueExplained">Au moment de l'achat.</small>
+
+                <label for="pricePaid">Prix d'achat:</label>
+                <input type="number" id="pricePaid" required>
+
+                <label for="discount">Rabais à l'attribution:</label>
+                <input type="number" id="discount" value=0 aria-describedby="discountExplained" required>
+                <small id="discountExplained">En valeur (en €), pas en %. Cela correspond à une remise <b>au moment
+                        où vous avez reçu les options</b>. Les actions valaient 100€ et votre employeur vous donne
+                    des options à 80€, vous avez 20€ de rabais.</small>
+            </div>
+            <div>
+                <label for="numberOfActions">Nombre d'actions:</label>
+                <input type="number" id="numberOfActions" value="1" required>
+
+                <label for="taxRate">Taux marginal d'imposition (%):</label>
+                <input type="number" value="30" id="taxRate" aria-describedby="taxRateExplained" required>
+                <small id="taxRateExplained">Votde dernière tdanche d'imposition.</small>
+            </div>
+
+        </form>
+        <button onclick="event.preventDefault(); compute();">Calculer</button>
+        <hr id="resultHr" hidden>
+        <h2 id="resultTitle" hidden>Résultats</h2>
+        <table class="striped" hidden id="result">
+            <thead>
+                <tr>
+                    <td>Titre</td>
+                    <td>Total imposable</td>
+                    <td>Impôts</td>
+                    <td>Prélèvements sociaux</td>
+                    <td>Total des taxes</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="rabaisExcedentaire">
+                    <td>Rabais excédentaire</td>
+                    <td id="rabaisExcedentaireTotal"></td>
+                    <td id="rabaisExcedentaireImpot"></td>
+                    <td id="rabaisExcedentaireSociaux"></td>
+                    <td id="rabaisExcedentaireTaxes"></td>
+                </tr>
+                <tr id="leveeOption">
+                    <td>Levée d'option</td>
+                    <td id="leveeOptionTotal"></td>
+                    <td id="leveeOptionImpot"></td>
+                    <td id="leveeOptionSociaux"></td>
+                    <td id="leveeOptionTaxes"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr id="tax">
+                    <td>Totaux</td>
+                    <td>-</td>
+                    <td id="taxImpot"></td>
+                    <td id="taxSociaux"></td>
+                    <td id="taxTaxes"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </main>
+    <hr>
+    <footer class="container">
+        <a href="https://github.com/clementduveau/stock-options-impots">Code source</a>
+        <p>Dernière mise à jour: 12/04/2024</p>
+    </footer>
+</body>
+</html>
