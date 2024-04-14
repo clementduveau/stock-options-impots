@@ -2,15 +2,19 @@ function compute() {
     var validationErrors = 0;
     const marketValue = validate('marketValue');
     const pricePaid = validate('pricePaid');
+    const priceSold = validate('priceSold');
     const discount = validate('discount');
     const numberOfActions = validate('numberOfActions');
     const taxRate = validate('taxRate') / 100;
     if (validationErrors > 0){return;}
 
+    const tauxPrelevementsSociaux = (9.2 + 0.5 + 7.5)/100
+    const PFU = 12.8 / 100;
+
     // Rabais
     var rabaisExcedentaireTotal = Math.max((discount - (marketValue * 5 / 100)) * numberOfActions, 0);
     var rabaisExcedentaireImpot = rabaisExcedentaireTotal * taxRate;
-    var rabaisExcedentaireSociaux = rabaisExcedentaireTotal * (9.2 + 0.5) / 100;
+    var rabaisExcedentaireSociaux = rabaisExcedentaireTotal * tauxPrelevementsSociaux;
     var rabaisExcedentaireTaxes = rabaisExcedentaireImpot + rabaisExcedentaireSociaux;
 
     display(rabaisExcedentaireTotal, 'rabaisExcedentaireTotal');
@@ -20,9 +24,9 @@ function compute() {
     document.getElementById('rabaisExcedentaire').removeAttribute('hidden');
 
     // Levée d'options
-    var leveeOptionTotal = (marketValue - pricePaid) * numberOfActions;
+    var leveeOptionTotal = Math.max((marketValue - (pricePaid + discount)) * numberOfActions, 0);
     var leveeOptionImpot = leveeOptionTotal * taxRate;
-    var leveeOptionSociaux = leveeOptionTotal * (9.2 + 0.5 + 10) / 100
+    var leveeOptionSociaux = leveeOptionTotal * (tauxPrelevementsSociaux + 10 / 100)
     var leveeOptionTaxes = leveeOptionImpot + leveeOptionSociaux;
 
     display(leveeOptionTotal, 'leveeOptionTotal');
@@ -30,6 +34,18 @@ function compute() {
     display(leveeOptionSociaux, 'leveeOptionSociaux');
     display(leveeOptionTaxes, 'leveeOptionTaxes');
     document.getElementById('leveeOption').removeAttribute('hidden');
+
+    // Plus value
+    var plusValueTotal = Math.max((priceSold - marketValue), 0) * numberOfActions;
+    var plusValueImpot = Math.min(plusValueTotal * PFU, plusValueTotal * taxRate);
+    var plusValueSociaux = plusValueTotal * tauxPrelevementsSociaux
+    var plusValueTaxes = plusValueImpot + plusValueSociaux;
+
+    display(plusValueTotal, 'plusValueTotal');
+    display(plusValueImpot, 'plusValueImpot');
+    display(plusValueSociaux, 'plusValueSociaux');
+    display(plusValueTaxes, 'plusValueTaxes');
+    document.getElementById('plusValue').removeAttribute('hidden');
 
     // Total
     var taxImpot = rabaisExcedentaireImpot + leveeOptionImpot;
@@ -68,5 +84,5 @@ function validate(key) {
         return;
     }
 
-    return value;
+    return Number(value);
 }

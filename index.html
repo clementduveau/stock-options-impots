@@ -38,7 +38,7 @@
         <h2>Informations</h2>
         <p>
         <ul>
-            <li>Le calculateur est conçu pour les stock-options émises après Février 2017 (avant cette date il y a
+            <li>Le calculateur est conçu pour les stock-options émises après 2017 (avant cette date il y a
                 d'autres
                 règles plus avantageuses).</li>
             <li>Les résultats sont à 1€ près.</li>
@@ -55,20 +55,26 @@
         <h2>Calculateur</h2>
         <form class="grid">
             <div>
+                <label for="pricePaid">Prix d'achat:</label>
+                <input type="number" id="pricePaid" value=80 aria-describedby="pricePaidExplained" required>
+                <small id="pricePaidExplained">Prix payé pour obtenir l'action. Prix de l'option.</small>
+                
                 <label for="marketValue">Prix de marché:</label>
-                <input type="number" id="marketValue" aria-describedby="marketValueExplained" required>
+                <input type="number" id="marketValue" value=120 aria-describedby="marketValueExplained" required>
                 <small id="marketValueExplained">Au moment de l'achat.</small>
 
-                <label for="pricePaid">Prix d'achat:</label>
-                <input type="number" id="pricePaid" required>
+                <label for="priceSold">Prix de revente:</label>
+                <input type="number" value=150 id="priceSold" required>
 
-                <label for="discount">Rabais à l'attribution:</label>
-                <input type="number" id="discount" value=0 aria-describedby="discountExplained" required>
-                <small id="discountExplained">En valeur (en €), pas en %. Cela correspond à une remise <b>au moment
-                        où vous avez reçu les options</b>. Les actions valaient 100€ et votre employeur vous donne
-                    des options à 80€, vous avez 20€ de rabais.</small>
             </div>
             <div>
+                <label for="discount">Rabais à l'attribution:</label>
+                <input type="number" id="discount" value=20 aria-describedby="discountExplained" required>
+                <small id="discountExplained">En valeur (en €), pas en %. Cela correspond à une remise au moment
+                    où vous avez reçu les options. Les actions valaient 100€ quand vous avez reçu vos options et
+                    votre employeur vous donne
+                    des options à 80€, vous avez 20€ de rabais.</small>
+
                 <label for="numberOfActions">Nombre d'actions:</label>
                 <input type="number" id="numberOfActions" value="1" required>
 
@@ -105,6 +111,13 @@
                     <td id="leveeOptionImpot"></td>
                     <td id="leveeOptionSociaux"></td>
                     <td id="leveeOptionTaxes"></td>
+                </tr>
+                <tr id="plusValue">
+                    <td>Plus value</td>
+                    <td id="plusValueTotal"></td>
+                    <td id="plusValueImpot"></td>
+                    <td id="plusValueSociaux"></td>
+                    <td id="plusValueTaxes"></td>
                 </tr>
             </tbody>
             <tfoot>
