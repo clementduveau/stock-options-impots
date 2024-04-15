@@ -41,7 +41,8 @@
             <li>Le calculateur est conçu pour les stock-options émises après 2017 (avant cette date il y a
                 d'autres
                 règles plus avantageuses).</li>
-            <li>Les résultats sont à 1€ près.</li>
+            <li>Les résultats sont à 1€ près. Vous pourriez rencontrer des erreurs d'arrondis.</li>
+            <li>Le calculateur ne fait pas de conversion de devises et considère que tous les chiffres sont donnés en euros.</li>
         </ul>
         </p>
         <details>
@@ -87,34 +88,30 @@
         <button onclick="event.preventDefault(); compute();">Calculer</button>
         <hr id="resultHr" hidden>
         <h2 id="resultTitle" hidden>Résultats</h2>
-        <table class="striped" hidden id="result">
+        <table class="striped overflow-auto" hidden id="result">
             <thead>
                 <tr>
                     <td>Titre</td>
-                    <td>Total imposable</td>
                     <td>Impôts</td>
                     <td>Prélèvements sociaux</td>
-                    <td>Total des taxes</td>
+                    <td>Total</td>
                 </tr>
             </thead>
             <tbody>
                 <tr id="rabaisExcedentaire">
                     <td>Rabais excédentaire</td>
-                    <td id="rabaisExcedentaireTotal"></td>
                     <td id="rabaisExcedentaireImpot"></td>
                     <td id="rabaisExcedentaireSociaux"></td>
                     <td id="rabaisExcedentaireTaxes"></td>
                 </tr>
                 <tr id="leveeOption">
                     <td>Levée d'option</td>
-                    <td id="leveeOptionTotal"></td>
                     <td id="leveeOptionImpot"></td>
                     <td id="leveeOptionSociaux"></td>
                     <td id="leveeOptionTaxes"></td>
                 </tr>
                 <tr id="plusValue">
                     <td>Plus value</td>
-                    <td id="plusValueTotal"></td>
                     <td id="plusValueImpot"></td>
                     <td id="plusValueSociaux"></td>
                     <td id="plusValueTaxes"></td>
@@ -123,18 +120,18 @@
             <tfoot>
                 <tr id="tax">
                     <td>Totaux</td>
-                    <td>-</td>
                     <td id="taxImpot"></td>
                     <td id="taxSociaux"></td>
                     <td id="taxTaxes"></td>
                 </tr>
             </tfoot>
         </table>
+        <article id="summary" hidden></article>
     </main>
     <hr>
     <footer class="container">
         <a href="https://github.com/clementduveau/stock-options-impots">Code source</a>
-        <p>Dernière mise à jour: 12/04/2024</p>
+        <p>Dernière mise à jour: 15/04/2024</p>
     </footer>
 </body>
 
