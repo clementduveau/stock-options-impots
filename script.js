@@ -47,12 +47,17 @@ function compute() {
     var taxImpot = rabaisExcedentaireImpot + leveeOptionImpot + plusValueImpot;
     var taxSociaux = rabaisExcedentaireSociaux + leveeOptionSociaux + plusValueSociaux;
     var taxTaxes = taxImpot + taxSociaux
+    var totalCost = (numberOfActions * pricePaid) + rabaisExcedentaireImpot + rabaisExcedentaireSociaux + leveeOptionImpot + leveeOptionSociaux
+    var totalSale = (numberOfActions * priceSold)
+    var totalBenefit = totalSale - taxTaxes
 
     display(taxImpot, 'taxImpot');
     display(taxSociaux, 'taxSociaux');
     display(taxTaxes, 'taxTaxes');
-
-    document.getElementById('summary').innerText = `Votre achat est de ${Math.round(pricePaid * numberOfActions)}€, vous devrez ${Math.round(taxTaxes - plusValueTaxes)}€ de taxes en plus à l'achat. Lors de la vente, ${withPFU ? 'grâce au PFU,' : ','} vous devrez ${plusValueTaxes}€.`;
+    display(totalCost, 'totalCost');
+    display(totalSale, 'totalSale');
+    display(totalBenefit, 'totalBenefit');
+    document.getElementById("withPFU").innerText = (withPFU ? 'Oui' : 'Non');
 
     document.getElementById('resultHr').removeAttribute('hidden');
     document.getElementById('resultTitle').removeAttribute('hidden');
@@ -60,7 +65,7 @@ function compute() {
     document.getElementById('summary').removeAttribute('hidden');
 }
 
-function display(value, key) {
+function format(value){
     const formatter = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -68,7 +73,11 @@ function display(value, key) {
         maximumFractionDigits: 0
     });
 
-    document.getElementById(key).innerText = formatter.format(value);
+    return formatter.format(value);
+}
+
+function display(value, key) {
+    document.getElementById(key).innerText = format(value);
 }
 
 function validate(key) {

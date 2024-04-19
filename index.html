@@ -126,7 +126,24 @@
                 </tr>
             </tfoot>
         </table>
-        <article id="summary" hidden></article>
+        <table class="striped overflow-auto" hidden id="summary">
+            <thead>
+                <tr>
+                    <td>Coût total d'acquisition</td>
+                    <td>Vente total</td>
+                    <td>Bénéfice net après impôts</td>
+                    <td>PFU ?</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="totalCost"></td>
+                    <td id="totalSale"></td>
+                    <td id="totalBenefit"></td>
+                    <td id="withPFU"></td>
+                </tr>
+            </tbody>
+        </table>
     </main>
     <hr>
     <footer class="container">
