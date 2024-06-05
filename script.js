@@ -65,7 +65,7 @@ function compute() {
     document.getElementById('summary').removeAttribute('hidden');
 }
 
-function format(value){
+function format(value) {
     const formatter = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -94,3 +94,91 @@ function validate(key) {
 
     return Number(value);
 }
+
+function contact() {
+    const form = document.getElementById('contact')
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    };
+
+    const formData = new FormData(form);
+    const url = 'https://n8n.duveau.eu/webhook-test/notify'; // Replace this with your actual endpoint URL
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            openModal("Votre message a bien été envoyé");
+        })
+        .catch((error) => {
+            openModal("Votre message n'a pas été reçu. Contactez moi directement sur clement@duveau.eu");
+        });
+}
+
+
+
+// Modal
+let visibleModal = null;
+
+function openModal(message) {
+    const animationDuration = 400; // ms
+    const modal = document.getElementById('modal');
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.getElementById('modal-msg').innerText = message;
+
+    const { documentElement: html } = document;
+
+    if (scrollbarWidth) {
+        html.style.setProperty('--pico-scrollbar-width', `${scrollbarWidth}px`);
+    }
+    html.classList.add('modal-is-open', 'modal-is-opening');
+    setTimeout(() => {
+        visibleModal = modal;
+        html.classList.remove('modal-is-opening');
+    }, animationDuration);
+    modal.showModal();
+}
+
+// Toggle modal
+const toggleModal = (event) => {
+    event.preventDefault();
+    if (!modal) return;
+    modal && (modal.open ? closeModal(modal) : openModal(modal));
+};
+
+// Close modal
+const closeModal = (modal) => {
+    visibleModal = null;
+    const { documentElement: html } = document;
+    html.classList.add('modal-is-closing');
+    setTimeout(() => {
+        html.classList.remove('modal-is-closing', 'modal-is-open');
+        html.style.removeProperty('--pico-scrollbar-width');
+        modal.close();
+    }, animationDuration);
+};
+
+// Close with a click outside
+document.addEventListener("click", (event) => {
+    if (visibleModal === null) return;
+    const modalContent = visibleModal.querySelector("article");
+    const isClickInside = modalContent.contains(event.target);
+    !isClickInside && closeModal(visibleModal);
+});
+
+// Close with Esc key
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && visibleModal) {
+        closeModal(visibleModal);
+    }
+});
+
+// Is scrollbar visible
+const isScrollbarVisible = () => {
+    return document.body.scrollHeight > screen.height;
+};

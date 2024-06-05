@@ -42,7 +42,8 @@
                 d'autres
                 règles plus avantageuses).</li>
             <li>Les résultats sont à 1€ près. Vous pourriez rencontrer des erreurs d'arrondis.</li>
-            <li>Le calculateur ne fait pas de conversion de devises et considère que tous les chiffres sont donnés en euros.</li>
+            <li>Le calculateur ne fait pas de conversion de devises et considère que tous les chiffres sont donnés en
+                euros.</li>
         </ul>
         </p>
         <details>
@@ -59,7 +60,7 @@
                 <label for="pricePaid">Prix d'achat:</label>
                 <input type="number" id="pricePaid" value=80 aria-describedby="pricePaidExplained" required>
                 <small id="pricePaidExplained">Prix payé pour obtenir l'action. Prix de l'option.</small>
-                
+
                 <label for="marketValue">Prix de marché:</label>
                 <input type="number" id="marketValue" value=120 aria-describedby="marketValueExplained" required>
                 <small id="marketValueExplained">Au moment de l'achat.</small>
@@ -83,7 +84,6 @@
                 <input type="number" value="30" id="taxRate" aria-describedby="taxRateExplained" required>
                 <small id="taxRateExplained">Votre dernière tranche d'imposition.</small>
             </div>
-
         </form>
         <button onclick="event.preventDefault(); compute();">Calculer</button>
         <hr id="resultHr" hidden>
@@ -148,8 +148,30 @@
     <hr>
     <footer class="container">
         <a href="https://github.com/clementduveau/stock-options-impots">Code source</a>
-        <p>Dernière mise à jour: 15/04/2024</p>
+        <p>Dernière mise à jour: 28/04/2024</p>
+        <details>
+            <summary role="button" class="outline secondary">Il vous manque une information ?</summary>
+            <form id="contact">
+                <label for="contact-email">Votre email:</label>
+                <input type="email" id="contact-email" name="contact-email" placeholder="moi@gmail.com" required>
+
+                <label for="contact-msg">Votre problème:</label>
+                <textarea id="contact-msg" name="contact-msg" placeholder="Bonjour, j'ai besoin de..."
+                    required></textarea>
+
+                <input type="submit" onclick="event.preventDefault(); contact();" value="Envoyer" />
+            </form>
+        </details>
+        <button onclick="openModal('test')">Test</button>
     </footer>
+    <dialog id="modal">
+        <article>
+            <header>
+                <button aria-label="Close" rel="prev" data-target="modal-example" onclick="toggleModal(event)"></button>
+            </header>
+            <p id="modal-msg"></p>
+        </article>
+    </dialog>
 </body>
 
 </html>
