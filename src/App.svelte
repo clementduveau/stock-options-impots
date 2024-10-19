@@ -1,7 +1,5 @@
 <script>
 	import { calculateTaxes } from "./taxCalculation.js";
-	import { generateChart } from "./chartGeneration.js";
-	import { onMount } from 'svelte';
 
 	let formData = {
 		pricePaid: 80,
@@ -78,10 +76,6 @@
 			total: "totalTaxes",
 		},
 	];
-
-	onMount(async (promise) => {
-		generateChart('chart');
-	});
 </script>
 
 <h2>Calculateur</h2>
@@ -109,8 +103,6 @@
 
 <hr />
 <h2>Résultats</h2>
-
-<div><canvas id="chart"></canvas></div>
 
 <table class="striped overflow-auto">
 	<thead>
