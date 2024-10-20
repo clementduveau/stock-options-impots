@@ -130,7 +130,7 @@
 		<tr>
 			<th>Coût total d'acquisition</th>
 			<th>Vente total</th>
-			<th>Restant après impôts & taxes</th>
+			<th>Bénéfices nets</th>
 			<th>PFU ?</th>
 		</tr>
 	</thead>
@@ -143,3 +143,32 @@
 		</tr>
 	</tbody>
 </table>
+
+<hr />
+
+<div class="container">
+	<h3>Besoin d'aide ou d'optimiser votre fiscalité ?</h3>
+	<form action="https://formspree.io/f/xnnqqeel" method="POST">
+		<label
+			>Votre adresse email
+			<input
+				type="email"
+				name="email"
+				placeholder="mon-email@gmail.com"
+			/>
+		</label>
+		<label>
+			Votre message
+			<textarea name="message"></textarea>
+		</label>
+		{#each formFields as field}
+			<input
+				type="number"
+				name={field.label}
+				bind:value={formData[field.id]}
+				hidden
+			/>
+		{/each}
+		<button type="submit">Envoyer</button>
+	</form>
+</div>

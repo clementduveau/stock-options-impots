@@ -37,7 +37,7 @@ export function calculateTaxes(formData) {
 	const totalTaxes = totalImpot + totalSociaux;
 	const totalCost = numberOfActions * pricePaid + totalTaxes;
 	const totalSale = numberOfActions * priceSold;
-	const totalBenefit = totalSale - totalTaxes;
+	const totalBenefit = totalSale - totalCost;
   
 	return {
 	  withPFU,
